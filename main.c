@@ -1,5 +1,6 @@
 // find a seed with a certain structure at the origin chunk
 #include "main.h"
+#include "biomenoise.h"
 #include "biomes.h"
 #include "finders.h"
 #include "generator.h"
@@ -7,7 +8,7 @@
 #include <stdio.h>
 const int MAX_SEARCH_SIZE = 128;
 int main() {
-  int structType = End_City;
+  int structType = Shipwreck;
   int mc = MC_1_20;
 
   int x = -9840;
@@ -63,6 +64,10 @@ long long getNearestStructure(int structType, int oX, int oZ, uint64_t seed,
     startX = oX / 16 / 32;
     startZ = oZ / 16 / 32;
   }
+  SurfaceNoise sn;
+  if (structType == End_City) {
+    initSurfaceNoise(&sn, DIM_END, seed);
+  }
 
   int x, y, dx, dy;
   x = y = dx = 0;
@@ -92,7 +97,10 @@ long long getNearestStructure(int structType, int oX, int oZ, uint64_t seed,
         }
       } else if (getStructurePos(structType, mc, seed, x + startX, y + startZ,
                                  &p)) {
-        if (isViableStructurePos(structType, &g, p.x, p.z, 0)) {
+        if (isViableStructurePos(structType, &g, p.x, p.z, 0) &&
+                (structType != End_City) ||
+            ((structType == End_City) &&
+             isViableEndCityTerrain(&g, &sn, p.x, p.z))) {
           double distance = abs(p.x - oX) + abs(p.z - oZ);
           if (bestDistance == -1 || distance < bestDistance) {
             bestDistance = distance;
