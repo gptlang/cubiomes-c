@@ -7,13 +7,13 @@
 #include <stdio.h>
 const int MAX_SEARCH_SIZE = 128;
 int main() {
-  int structType = Slime_Chunk;
+  int structType = End_City;
   int mc = MC_1_20;
 
-  int x = 0;
-  int z = 0;
+  int x = -9840;
+  int z = 48;
 
-  uint64_t seed = 7613135772489002899;
+  uint64_t seed = -1717312650922586601;
   long long p = getNearestStructure(structType, x, z, seed, mc);
   x = (int)(p >> 32);
   z = (int)(p & 0xffffffffL);
