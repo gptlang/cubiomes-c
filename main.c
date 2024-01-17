@@ -83,32 +83,29 @@ long long getNearestStructure(int structType, int oX, int oZ, uint64_t seed,
         break;
       }
       Pos p;
-      if (structType == Slime_Chunk) {
-        if (isSlimeChunk(seed, x + startX, y + startZ)) {
-          if (bestDistance == -1 || abs(x) + abs(y) < bestDistance) {
-            bestDistance = abs(x) + abs(y);
-            p.x = (x + startX) * 16;
-            p.z = (y + startZ) * 16;
-            bestPos = p;
-            foundPos.x = x + startX;
-            foundPos.z = y + startZ;
-            found = 1;
-          }
-        }
+      if (structType == Slime_Chunk &&
+          (isSlimeChunk(seed, x + startX, y + startZ)) &&
+          (bestDistance == -1 || abs(x) + abs(y) < bestDistance)) {
+        bestDistance = abs(x) + abs(y);
+        p.x = (x + startX) * 16;
+        p.z = (y + startZ) * 16;
+        bestPos = p;
+        foundPos.x = x + startX;
+        foundPos.z = y + startZ;
+        found = 1;
       } else if (getStructurePos(structType, mc, seed, x + startX, y + startZ,
-                                 &p)) {
-        if (isViableStructurePos(structType, &g, p.x, p.z, 0) &&
-                (structType != End_City) ||
-            ((structType == End_City) &&
-             isViableEndCityTerrain(&g, &sn, p.x, p.z))) {
-          double distance = abs(p.x - oX) + abs(p.z - oZ);
-          if (bestDistance == -1 || distance < bestDistance) {
-            bestDistance = distance;
-            bestPos = p;
-            foundPos.x = x + startX;
-            foundPos.z = y + startZ;
-            found = 1;
-          }
+                                 &p) &&
+                 (isViableStructurePos(structType, &g, p.x, p.z, 0) &&
+                      (structType != End_City) ||
+                  ((structType == End_City) &&
+                   isViableEndCityTerrain(&g, &sn, p.x, p.z)))) {
+        double distance = abs(p.x - oX) + abs(p.z - oZ);
+        if (bestDistance == -1 || distance < bestDistance) {
+          bestDistance = distance;
+          bestPos = p;
+          foundPos.x = x + startX;
+          foundPos.z = y + startZ;
+          found = 1;
         }
       }
     }
