@@ -141,9 +141,10 @@ int getDimFromFeature(enum StructureType structType) {
   case Ruined_Portal:
   case Ancient_City:
   case Treasure:
-  case Mineshaft: // Doesn't work
+  case Mineshaft:
   case Desert_Well:
   case Slime_Chunk:
+	case Trail_Ruin:
   case Geode: {
     dimension = DIM_OVERWORLD;
     break;
