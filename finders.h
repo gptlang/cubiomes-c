@@ -39,7 +39,8 @@ enum StructureType
     End_Island,
     Trail_Ruins,
     Trial_Chambers,
-    FEATURE_NUM
+    FEATURE_NUM,
+    Slime_Chunk
 };
 
 
