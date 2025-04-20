@@ -164,7 +164,7 @@ int getDimFromFeature(enum StructureType structType) {
   }
   default: {
     printf("Unknown structure type: %d\n", structType);
-    return -1;
+    dimension = DIM_OVERWORLD;
   }
   }
   return dimension;
